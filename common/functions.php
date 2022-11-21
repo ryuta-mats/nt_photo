@@ -264,7 +264,7 @@ function insert_photo($name, $group_id, $team_name ,$image_name, $description)
     }
 }
 
-function find_photo_by_id($id){
+function find_photo_by_id($group_id){
     $dbh = connect_db();
 
     $sql = <<<EOM
@@ -273,11 +273,11 @@ function find_photo_by_id($id){
     FROM
         photos
     WHERE
-        id = :id;
+        group_id = :group_id;
     EOM;
 
     $stmt = $dbh->prepare($sql);
-    $stmt->bindValue(':id', $id, PDO::PARAM_STR);
+    $stmt->bindValue(':group_id', $group_id, PDO::PARAM_STR);
     $stmt->execute();
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
