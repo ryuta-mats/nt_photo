@@ -12,7 +12,7 @@ $errors = [];
 $image_name = '';
 
 if (isset($_GET['group_id'])) {
-    $group = find_user_by_id($_GET['group_id']);
+    $group = find_group_by_id($_GET['group_id']);
     if (!$group) {
         header('Location: completion.php?err=1');
         exit;
@@ -57,8 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <main class="main_content content_center wrapper">
         <div class="form_flex">
             <?php include_once __DIR__ . '/../common/_errors.php' ?>
-            <pre><?= var_dump($group) ?></pre>
-
             <form action="" method="post" class="upload_content_form" enctype="multipart/form-data">
                 <textarea class="input_text" name="title" rows="2" placeholder="この画像のタイトル"><?= h($title) ?></textarea>
                 <label id="preview" class="upload_content_label" for="file_upload">
