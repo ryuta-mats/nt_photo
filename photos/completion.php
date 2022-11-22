@@ -8,7 +8,7 @@ session_start();
 $group = '';
 
 if (isset($_GET['group_id'])) {
-    $group = find_user_by_id($_GET['group_id']);
+    $group = find_group_by_id($_GET['group_id']);
 } elseif (isset($_GET['err'])) {
     $err = $_GET['err'];
 }

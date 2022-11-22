@@ -15,16 +15,19 @@ main {
     margin: 0;
     padding: 0 4%;
 }
+
 .page_header {
-    background-color: #000000;
-    display: flex;
-    height: 80px;
-    align-items: center;
-    justify-content: space-between;
+    height: fit-content;
+    padding: 20px 30px;
+    background-color: #4D4D4D;
 }
 .logo {
     text-decoration: none;
     color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 2rem;
 }
 
 .login_info {
@@ -52,7 +55,11 @@ main {
     text-decoration: none;
     margin-right: 10px;
 }
-
+.index_header {
+    background-color: #000000;
+    color: #CCCCCC;
+    font-size: 1.2rem;
+}
 .home_icon {
     color: #FFFFFF;
     font-size: 30px;
@@ -88,10 +95,19 @@ main {
 .upload_content_form {
     width: 50%;
 }
+.upload_description {
+    width: 50%;
+    padding: 10px;
+    margin: 50px 0;
+    min-width: 300px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
 .form_flex {
     width: 100%;
     display: flex;
-    flex-flow: column;
+    flex-direction: column;
     align-items: center;
 }
 .upload_content_label {
@@ -137,11 +153,29 @@ main {
     border-radius: 18px;
     font-size: 18px;
     padding: 5px 30px;
-    background: #F15A24;
+    background: #626262;
     color: #ffffff;
     margin-left: auto;
+    transition: 0.3s;
 }
-
+.upload_submit:hover,
+.update_button:hover {
+    background: #ffffff;
+    color: #626262;
+}
+.form_btn {
+    display: block;
+    margin-top: 10px;
+    border-radius: 10px;
+    font-size: 18px;
+    padding: 5px 30px;
+    background: #3b62ff;
+    color: #ffffff;
+    transition: 0.3s;
+    text-align: center;
+    width: 300px;
+    margin: 0 auto;
+}
 /* index.php */
 .idnex_main {
     display: flex;
@@ -165,10 +199,14 @@ main {
 .article {
     margin: 5% 0;
 }
-.group_wrap{
- margin-bottom: 20px;
+.group_wrap {
+    margin-bottom: 20px;
 }
 
+.photo {
+    margin-top: 30px;
+    border-top: 1px solid #999999;
+}
 .grid {
     display: flex;
     flex-direction: row;
@@ -177,9 +215,13 @@ main {
 }
 .grid_item {
     margin: 20px 5px;
+    font-size: 0.8rem;
+}
+.grid_item p {
+    padding: 0 10px;
+    font-size: 10px;
 }
 .grid_item img {
-    width: 100%;
     height: 150px;
     margin-bottom: 5px;
     border-radius: 5px;
@@ -202,21 +244,38 @@ main {
     height: 60px;
 }
 
-.input_wrap{
-display: flex;
+.input_wrap {
+    display: flex;
 }
-.input_wrap label{
-display: flex;
-flex-direction: column;
-margin: 10px;
+.input_wrap label {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
 }
 
-.input_item{
-border: #999999 solid 1px;
-margin: 5px;
-font-size: 0.6rem;
-width: 200px;
-} 
+.input_item {
+    border: #999999 solid 1px;
+    margin: 5px;
+    font-size: 0.6rem;
+    width: 200px;
+}
+
+.tgl_btn{
+    margin-top: 5px;
+    border-radius: 3px;
+    font-size: 10px;
+    padding: 5px 10px;
+    background: #909090;
+    color: #ffffff;
+    transition: 0.3s;
+    text-align: center;
+        margin-left: auto;
+
+}
+.tgl_btn:hover{
+    background:#ffffff ;
+    color: #909090;
+}
 
 /* show.php */
 .content {
@@ -228,11 +287,6 @@ width: 200px;
     height: 50vh;
     border-radius: 40px;
     object-fit: cover;
-}
-.main_content p {
-    margin-top: 10px;
-    width: 100%;
-    color: #4D4D4D;
 }
 .edit_button {
     font-size: 18px;

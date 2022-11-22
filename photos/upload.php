@@ -28,14 +28,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $team_name = filter_input(INPUT_POST, 'team_name');
     // アップロードした画像のファイル名
     $upload_file = $_FILES['image']['name'];
-    $file_info = pathinfo($upload_file);
-    $img_extension = strtolower($file_info['extension']);
     // サーバー上で一時的に保存されるテンポラリファイル名
     $upload_tmp_file = $_FILES['image']['tmp_name'];
 
-    $errors = insert_validate($description, $title, $team_name, $upload_file);
+    $errors = photo_insert_validate($description, $title, $team_name, $upload_file);
 
     if (empty($errors)) {
+        $file_info = pathinfo($upload_file);
+        $img_extension = strtolower($file_info['extension']);
         $image_name = date('YmdHis') . '_' . $group['name'] . '_' . $team_name . '_' . $title . '.' . $img_extension;
         $path = '../images/' . $image_name;
 
@@ -56,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <main class="main_content content_center wrapper">
         <div class="form_flex">
+            <p class="upload_description"><?= h($group['description']) ?></p>
             <?php include_once __DIR__ . '/../common/_errors.php' ?>
             <form action="" method="post" class="upload_content_form" enctype="multipart/form-data">
                 <textarea class="input_text" name="title" rows="2" placeholder="この画像のタイトル"><?= h($title) ?></textarea>

@@ -157,7 +157,8 @@ function find_group_by_id($id)
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function find_group_all(){
+function find_group_all()
+{
     // データベースに接続
     $dbh = connect_db();
 
@@ -177,8 +178,7 @@ function find_group_all(){
     $stmt->execute();
 
     // 結果の取得
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);    
-
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
 function user_login($user)
@@ -189,7 +189,7 @@ function user_login($user)
     exit;
 }
 
-function insert_validate($description, $title, $team_name, $upload_file)
+function photo_insert_validate($description, $title, $team_name, $upload_file)
 {
     $errors = [];
 
@@ -236,7 +236,7 @@ function check_file_pdf_ext($upload_file)
     }
 }
 
-function insert_photo($name, $group_id, $team_name ,$image_name, $description)
+function insert_photo($name, $group_id, $team_name, $image_name, $description)
 {
     try {
         $dbh = connect_db();
@@ -264,7 +264,52 @@ function insert_photo($name, $group_id, $team_name ,$image_name, $description)
     }
 }
 
-function find_photo_by_id($group_id){
+function group_insert_validate($c_date, $c_group_name, $c_description)
+{
+    $errors = [];
+
+    if (empty($c_date)) {
+        $errors[] = MSG_NO_DATE;
+    }
+    if (empty($c_group_name)) {
+        $errors[] = MSG_NO_GROUP_NAME;
+    }
+    if (empty($c_description)) {
+        $errors[] = MSG_NO_DESCRIPTION;
+    }
+
+    return $errors;
+}
+function insert_group($day, $name, $description)
+{
+    try {
+        $dbh = connect_db();
+
+        $sql = <<<EOM
+        INSERT INTO 
+            groups
+            (name, day, description) 
+        VALUES 
+            (:name, :day, :description);
+        EOM;
+        $stmt = $dbh->prepare($sql);
+
+        $stmt->bindValue(':name', $name, PDO::PARAM_STR);
+        $stmt->bindValue(':day', $day, PDO::PARAM_STR);
+        $stmt->bindValue(':description', $description, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $id = $dbh->lastInsertId();
+
+        return $id;
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+        return false;
+    }
+}
+
+function find_photo_by_id($group_id)
+{
     $dbh = connect_db();
 
     $sql = <<<EOM
