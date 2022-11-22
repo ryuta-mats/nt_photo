@@ -49,11 +49,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         case 2: //団体情報の変更
             //postの内容を配列にいれる
+            $group_id = filter_input(INPUT_POST, 'group_id');
             $e_date = filter_input(INPUT_POST, 'e_date');
             $e_group_name = filter_input(INPUT_POST, 'e_group_name');
+            $e_description = filter_input(INPUT_POST, 'e_description');
             //バリデーションを行う
-            //DBをuodateする
-            //リダイレクトする
+            $e_errors = group_update_validate($e_date, $e_group_name, $e_description);
+
+            if (empty($e_errors)) {
+
+                //DBをuodateする
+                if (update_group($group_id, $e_date, $e_group_name, $e_description)) {
+                    //リダイレクトする
+                    header('Location: index.php?group_id=' . $group_id);
+                    exit;
+                }
+            }
             break;
 
         case 3: //ダウンロード
@@ -125,6 +136,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </ul>
             <?php endif; ?>
             <form class="group_form" action="index.php" method="post">
+                <input type="submit" value="新規登録" class="tgl_btn dowmload_btn">
                 <input class="input_item" type="hidden" name="prosess" value="1">
                 <label for="c_date">
                     <input class="input_item" id="c_date" type="date" name="c_date" placeholder="実施日" value="<?= h($c_date) ?>">
@@ -135,7 +147,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="c_description">
                     <textarea class="input_item" name="c_description" id="c_description" rows="5" placeholder="投稿フォームの説明文"><?= h($c_description) ?></textarea>
                 </label>
-                <input type="submit" value="新規登録" class="upload_submit">
             </form>
 
 
@@ -143,8 +154,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="right_content">
             <h2 class="login_title">団体情報</h2>
-            <form class="group_form" action="index.php" method="post">
+            <form class="group_form" action="index.php?group_id=<?= h($e_group['id']) ?>" method="post">
+                <p>
+                    <input type="submit" value="変更" class="tgl_btn dowmload_btn">
+                    <?php if (!empty($e_group)) : ?>
+                        <a class="tgl_btn dowmload_btn" href="../photos/upload.php?group_id=<?= h($e_group['id']) ?>">フォーム生成</a>
+                    <?php endif; ?>
+                </p>
                 <input class="input_item" type="hidden" name="prosess" value="2">
+                <input class="input_item" type="hidden" name="group_id" value="<?= h($e_group['id']) ?>">
+
                 <div class="input_wrap">
                     <label for="e_date">実施日
                         <input class="input_item" id="e_date" type="date" name="e_date" placeholder="実施日" value="<?php !empty($e_group) && print h($e_group['day']) ?>">
@@ -156,18 +175,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <textarea class="input_item" name="e_description" id="e_description" rows="5" placeholder="投稿フォームの説明文"><?php !empty($e_group) && print h($e_group['description']); ?></textarea>
                     </label>
                 </div>
-                <input type="submit" value="変更" class="upload_submit">
             </form>
-            <?php if (!empty($e_group)) : ?>
-                <a class="form_btn" href="../photos/upload.php?group_id=<?= h($e_group['id']) ?>">フォーム</a>
-            <?php endif; ?>
 
             <div class="photo">
                 <h2 class="login_title">写真</h2>
-                <form name="photo_form" action="index.php" method="post">
+                <form name="photo_form" action="index.php?group_id=<?= h($e_group['id']) ?>" method="post">
                     <input class="input_item" type="hidden" name="prosess" value="3">
-                    <input type="submit" value="ダウンロード" class="upload_submit">
+                    <input class="input_item" type="hidden" name="group_id" value="<?= h($e_group['id']) ?>">
+
                     <p>
+                        <input type="submit" value="ダウンロード" class="tgl_btn dowmload_btn">
                         <input class="tgl_btn" type="button" value="全てチェック" onclick="allcheck(true);">
                         <input class="tgl_btn" value="全てチェックを外す" onclick="allcheck(false);">
                     </p>
@@ -180,6 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <?= $photo['image'] ?></label>
                                 </p>
                                 <img src="../images/<?= h($photo['image']) ?>" alt="<?= h($photo['team_name']) ?>">
+                                <p><?= h($photo['name']) ?></p>
                                 <p><?= h($photo['team_name']) ?></p>
                                 <p><?= h($photo['description']) ?></p>
                             </div>
@@ -190,6 +208,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         </div>
     </main>
+    <?php include_once __DIR__ . '/../common/_footer.html' ?>
+
     <script>
         function allcheck(tf) {
             var ElementsCount = document.photo_form.elements.length; // チェックボックスの数

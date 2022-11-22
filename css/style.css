@@ -136,17 +136,29 @@ main {
     width: 100%;
     border: 1px solid #E6E6E6;
     padding: 10px;
-    height: 73px;
 }
+
 .upload_content_label img {
     height: 100%;
     width: 100%;
     object-fit: cover;
 }
 .input_text::placeholder {
-    color: #E6E6E6;
+    color: #c2c1c1;
 }
-.upload_submit,
+
+.upload_submit {
+    display: block;
+    margin-top: 10px;
+    border-radius: 50rem 50rem;
+    font-size: 1.5rem;
+    padding: 30px 100px;
+    background: #626262;
+    color: #ffffff;
+    transition: 0.3s;
+    margin: 30px auto;
+}
+
 .update_button {
     display: block;
     margin-top: 10px;
@@ -160,7 +172,7 @@ main {
 }
 .upload_submit:hover,
 .update_button:hover {
-    background: #ffffff;
+    background: #e8e8e8;
     color: #626262;
 }
 .form_btn {
@@ -183,7 +195,6 @@ main {
 }
 .left_content {
     width: 300px;
-    margin-right: 30px;
     border-right: 1px solid #999999;
     padding: 0px 5px;
 }
@@ -195,6 +206,7 @@ main {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    padding-left: 5px;
 }
 .article {
     margin: 5% 0;
@@ -260,20 +272,29 @@ main {
     width: 200px;
 }
 
-.tgl_btn{
+.tgl_btn {
     margin-top: 5px;
     border-radius: 3px;
     font-size: 10px;
-    padding: 5px 10px;
+    padding: 5px 5px;
     background: #909090;
     color: #ffffff;
     transition: 0.3s;
     text-align: center;
-        margin-left: auto;
+    margin-right: auto;
 
 }
-.tgl_btn:hover{
-    background:#ffffff ;
+.tgl_btn:hover {
+    background: #e4e4e4;
+    color: #909090;
+}
+
+.dowmload_btn {
+    background: #000000;
+    color: #ffffff;
+}
+.dowmload_btn:hover {
+    background: #e4e4e4;
     color: #909090;
 }
 
@@ -363,7 +384,7 @@ input[type="password"]::placeholder {
 }
 .login_title {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 30px 0 10px;
 }
 .login_button {
     border-radius: 30px;

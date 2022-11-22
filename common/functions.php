@@ -280,6 +280,55 @@ function group_insert_validate($c_date, $c_group_name, $c_description)
 
     return $errors;
 }
+
+function group_update_validate($date, $group_name, $description)
+{
+    $errors = [];
+
+    if (empty($date)) {
+        $errors[] = MSG_NO_DATE;
+    }
+    if (empty($group_name)) {
+        $errors[] = MSG_NO_GROUP_NAME;
+    }
+    if (empty($description)) {
+        $errors[] = MSG_NO_DESCRIPTION;
+    }
+
+    return $errors;
+}
+
+
+function update_group($id, $day, $name, $description)
+{
+    try {
+        $dbh = connect_db();
+
+        $sql = <<<EOM
+        UPDATE
+            groups
+        SET
+            day = :day,
+            name = :name,
+            description = :description
+        WHERE
+            id = :id;
+        EOM;
+
+        $stmt = $dbh->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->bindValue(':name', $name, PDO::PARAM_STR);
+        $stmt->bindValue(':day', $day, PDO::PARAM_STR);
+        $stmt->bindValue(':description', $description, PDO::PARAM_STR);
+        $stmt->execute();
+        return true;
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+        return false;
+    }
+}
+
+
 function insert_group($day, $name, $description)
 {
     try {
