@@ -22,11 +22,10 @@ body {
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
 }
 
-.sidebar-sticky {
+.bg-light {
   position: relative;
   top: 0;
-  height: calc(100vh - 48px);
-  padding-top: .5rem;
+  padding-top: 60px;
   overflow-x: hidden;
   overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
 }
@@ -67,7 +66,7 @@ body {
  */
 
 [role="main"] {
-  padding-top: 48px; /* Space for fixed navbar */
+  padding-top: 60px; /* Space for fixed navbar */
 }
 
 /*
@@ -78,7 +77,6 @@ body {
   padding-top: .75rem;
   padding-bottom: .75rem;
   font-size: 1rem;
-  background-color: rgba(0, 0, 0, .25);
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
 }
 

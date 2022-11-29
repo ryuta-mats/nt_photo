@@ -114,67 +114,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php include_once __DIR__ . '/../common/_head.html' ?>
 
 <body>
-    <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-sm-2 col-md-3 mr-0" href="#"><i class="fa-regular fa-snowflake"></i>NRTA Photo App Admin</a>
+    <nav class="navbar navbar-expand navbar-dark bg-dark fixed-top">
+        <a class="navbar-brand" href="#"><i class="fa-regular fa-snowflake"></i>NRTA Photo App Admin</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-        <ul class="navbar-nav px-3">
-            <div class="row">
-                <li class="nav-item text-nowrap mr-4">
-                    <a class="nav-link" href="#"></a>
+        <div class="collapse navbar-collapse" id="navbarsExample04">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown dropleft">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Group List</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown04">
+                        <?php foreach ($groups as $c_group) : ?>
+                            <a class="dropdown-item" href="index.php?group_id=<?= h($c_group['id']) ?>"><?= h($c_group['name']) ?></a>
+                        <?php endforeach; ?>
+                    </div>
                 </li>
-                <li class="nav-item text-nowrap mr-4">
-                    <a class="nav-link" href="#"></a>
-                </li>
-            </div>
-        </ul>
+            </ul>
+        </div>
     </nav>
 
     <div class="container-fluid">
         <div class="row">
-            <nav class="col-md-3 d-none d-md-block bg-light sidebar">
-                <div class="sidebar-sticky">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="home"></span>
-                                Group List<span class="sr-only">(current)</span>
-                            </a>
-                            <ul class="group_wrap ml-2">
-                                <?php foreach ($groups as $c_group) : ?>
-                                    <li><a href="index.php?group_id=<?= h($c_group['id']) ?>"><?= h($c_group['name']) ?></a></li>
-                                <?php endforeach; ?>
-                            </ul>
-                            <?php if (!empty($c_errors)) : ?>
-                                <ul class="errors">
-                                    <?php foreach ($c_errors as $error) : ?>
-                                        <li><?= $error ?></li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            <?php endif; ?>
-                            <form class="form group_form" action="index.php" method="post">
-                                <input class="input_item" type="hidden" name="prosess" value="1">
-                                <input class="form-control form-control-sm col-10 m-1" id="c_date" type="date" name="c_date" placeholder="実施日" value="<?= h($c_date) ?>">
-                                <input class="form-control form-control-sm col-10 m-1" id="c_group_name" type="text" name="c_group_name" placeholder="団体名" value="<?= h($c_group_name) ?>">
-                                <textarea class="form-control form-control-sm col-10 m-1" name="c_description" id="c_description" rows="5" placeholder="投稿フォームの説明文"><?= h($c_description) ?></textarea>
-                                <input type="submit" value="New Group" class="btn btn-sm btn-outline-secondary col-10">
-                            </form>
-
-
-
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span data-feather="layers"></span>
-                            </a>
-                        </li>
+            <div class="d-md-block bg-light col-md-3 pl-1 pr-3">
+                <h2 class="login_title mt-3">Create Group</h2>
+                <?php if (!empty($c_errors)) : ?>
+                    <ul class="errors">
+                        <?php foreach ($c_errors as $error) : ?>
+                            <li><?= $error ?></li>
+                        <?php endforeach; ?>
                     </ul>
-                </div>
-            </nav>
+                <?php endif; ?>
+                <form class="form group_form" action="index.php" method="post">
+                    <input class="input_item" type="hidden" name="prosess" value="1">
+                    <input class="form-control form-control-sm m-1" id="c_date" type="date" name="c_date" placeholder="実施日" value="<?= h($c_date) ?>">
+                    <input class="form-control form-control-sm m-1" id="c_group_name" type="text" name="c_group_name" placeholder="団体名" value="<?= h($c_group_name) ?>">
+                    <textarea class="form-control form-control-sm m-1" name="c_description" id="c_description" rows="5" placeholder="投稿フォームの説明文"><?= h($c_description) ?></textarea>
+                    <input type="submit" value="New Group" class="btn btn-sm btn-outline-secondary">
+                </form>
+            </div>
 
             <main role="main" class="col-md-9 ml-sm-auto col-lg-9 px-4">
-
-
                 <div class="right_content">
+                    <?php if (!empty($e_group)) : ?>
+                        <h1 class="login_title mt-3"><?= h($e_group['name']) ?></h1>
+                    <?php endif; ?>
+
                     <h2 class="login_title mt-3">Group Infomation</h2>
                     <form class="form" action="index.php?group_id=<?= h($e_group['id']) ?>" method="post">
                         <p>
@@ -186,14 +171,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <input class="input_item" type="hidden" name="prosess" value="2">
                         <input class="input_item" type="hidden" name="group_id" value="<?= h($e_group['id']) ?>">
                         <div class="form-row">
-                            <label class="col-3" for="e_date">実施日
+                            <label class="col-md-3" for="e_date">実施日
                                 <input class="form-control form-control-sm" id="e_date" type="date" name="e_date" placeholder="実施日" value="<?php !empty($e_group) && print h($e_group['day']) ?>">
                             </label>
-                            <label class="col-3" for="e_group_name">団体名
+                            <label class="col-md-3" for="e_group_name">団体名
                                 <input class="form-control form-control-sm" id="e_group_name" type="text" name="e_group_name" placeholder="団体名" value="<?php !empty($e_group) && print h($e_group['name']) ?>">
                             </label>
 
-                            <label class="col-6" for="e_description">説明
+                            <label class="col-md-6" for="e_description">説明
                                 <textarea class="form-control" name="e_description" id="e_description" rows="5" placeholder="投稿フォームの説明文"><?php !empty($e_group) && print h($e_group['description']); ?></textarea>
                             </label>
                         </div>
@@ -212,17 +197,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </p>
 
                             <div class="card-deck">
-                                <div class="row">
+                                <div class="row m-0">
                                     <?php foreach ($photos as $photo) : ?>
-                                        <div class="col-sm-4 mb-5">
-                                            <div class="card shadow-sm h-100">
-                                                <input type="checkbox" class="form-control form-control-sm position-absolute col-1 ml-2 mb-1 cb" id="<?= h($photo['id']) ?>" name="check[]" value="<?= $photo['image'] ?>">
-                                                <img class="card-img-top" data-toggle="modal" data-target=".bd-example-modal-lg" src="../images/<?= h($photo['image']) ?>" alt="<?= h($photo['team_name']) ?>">
+                                        <div class="col-sm-4 mb-5 p-2">
+                                            <div class="card shadow-sm h-100 m-0">
+                                                <input type="checkbox" class="form-control form-control-sm position-absolute col-1 ml-2 mt-1" id="<?= h($photo['id']) ?>" name="check[]" value="<?= $photo['image'] ?>">
+                                                <img class="card-img-top" data-toggle="modal" data-target=".exampleModal-<?= h($photo['id']) ?>" src="../images/<?= h($photo['image']) ?>" alt="<?= h($photo['team_name']) ?>">
                                                 <div class="card-body">
-                                                    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                                    <div class="modal fade bd-example-modal-lg exampleModal-<?= h($photo['id']) ?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                                         <div class="modal-dialog modal-lg">
                                                             <div class="modal-content">
-                                                                <img class="modal-content" data-bs-toggle="modal" data-bs-target="#exampleModal" src="../images/<?= h($photo['image']) ?>" alt="<?= h($photo['team_name']) ?>">
+                                                                <img class="modal-content" data-bs-toggle="modal" data-bs-target="#exampleModal-<?= h($photo['id']) ?>" src="../images/<?= h($photo['image']) ?>" alt="<?= h($photo['team_name']) ?>">
                                                             </div>
                                                         </div>
                                                     </div>

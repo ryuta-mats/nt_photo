@@ -94,21 +94,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="title">title</span>
                         </div>
-                        <input type="text" class="form-control" placeholder="タイトルを入力してください" name="title" value="<?= h($title) ?>">
+                        <input type="text" class="form-control" placeholder="タイトルを入力" name="title" value="<?= h($title) ?>">
                     </div>
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">description</span>
                         </div>
-                        <textarea class="form-control" rows="5" name="description" placeholder="写真の説明を入力してください" name="description"><?= h($description) ?></textarea>
+                        <textarea class="form-control" rows="5" name="description" placeholder="写真の説明を入力" name="description"><?= h($description) ?></textarea>
                     </div>
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">Taam Name</span>
+                            <span class="input-group-text" id="basic-addon1">Team</span>
                         </div>
-                        <input type="text" class="form-control" placeholder="チーム名を入力してください" name="team_name" value="<?= h($team_name) ?>">
+                        <input type="text" class="form-control" placeholder="チーム名を入力" name="team_name" value="<?= h($team_name) ?>">
                     </div>
                     <label for="send" class="btn btn-secondary btn-lg btn-block">Send <i class="fa-solid fa-paper-plane"></i>
                         <input type="submit" id="send" value="">
