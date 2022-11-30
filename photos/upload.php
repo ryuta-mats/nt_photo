@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         $file_info = pathinfo($upload_file);
         $img_extension = strtolower($file_info['extension']);
-        $image_name = date('YmdHis') . '_' . $group['name'] . '_' . $team_name . '_' . $title . '.' . $img_extension;
+        $image_name = date('YmdHis') . '_' . $group['name'] . '.' . $img_extension;
         $path = '../images/' . strtolower($image_name);
 
         if ((move_uploaded_file($upload_tmp_file, $path)) &&
